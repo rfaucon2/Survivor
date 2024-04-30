@@ -5,9 +5,9 @@ Application::Application()
 {
     this->m_window = new sf::RenderWindow(sf::VideoMode(Application::WIDTH, Application::HEIGHT), "3d cubes", sf::Style::Close);
     this->m_player = new Player();
-    sf::Texture t;
-    t.loadFromFile("resources/background.jpg");
-    this->m_background.setTexture(t);
+    
+    this->m_background_image.loadFromFile("resources/download.jpeg");
+    this->m_background = sf::Sprite(this->m_background_image);
 }
 Application::~Application()
 {

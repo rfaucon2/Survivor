@@ -7,5 +7,7 @@ float util::size(sf::Vector2f v)
 
 sf::Vector2f util::normalize(sf::Vector2f v)
 {
+    if(util::size(v) == 0)
+        return sf::Vector2f(0, 0);
     return v / util::size(v);
 }

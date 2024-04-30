@@ -3,7 +3,7 @@
 Player::Player()
 {
     this->m_rect = sf::Rect<float>(0, 0, this->WIDTH, this->HEIGHT);
-    this->m_speed = 200;
+    this->m_speed = 1000;
 }
 
 void Player::Update(float dt)
@@ -20,7 +20,8 @@ void Player::Update(float dt)
         dp.x += 1;
 
     dp = util::normalize(dp) * dt * this->m_speed;
-
+    this->m_rect.top += dp.y;
+    this->m_rect.left += dp.x;
 }
 void Player::Draw(sf::RenderTarget* target)
 {

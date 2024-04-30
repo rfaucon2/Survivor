@@ -13,6 +13,7 @@ private:
     sf::RenderWindow*   m_window;
     Player*             m_player;
     sf::Clock           m_clock;
+    sf::Texture         m_background_image;
     sf::Sprite          m_background;
 
 public:
