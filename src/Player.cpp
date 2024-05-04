@@ -4,8 +4,8 @@ Player::Player()
 {
     this->m_rect = sf::Rect<float>(0, 0, this->WIDTH, this->HEIGHT);
     this->m_speed = 1000;
-    this->m_maxhp = 100;
-    this->m_hp = this->m_maxhp;
+    this->m_maxhp = Player::BASE_MAXHP;
+    this->m_hp = 100;
 }
 
 void Player::Update(float dt)
@@ -37,13 +37,15 @@ void Player::Draw(sf::RenderTarget* target)
 
     // Draw lifebar
     sf::RectangleShape lifebar;
+    const float BASE_WIDTH = this->m_rect.getSize().x * 1.6f;
+    float bar_width = BASE_WIDTH * (this->m_maxhp / Player::BASE_MAXHP);
     lifebar.setFillColor(sf::Color(100, 0, 0));
-    lifebar.setSize(sf::Vector2f(this->m_rect.getSize().x * 1.6f, 10));
-    lifebar.setPosition(sf::Vector2f(body.getPosition().x - (this->m_rect.getSize().x * 0.8f),
-                                     body.getPosition().y - (body.getSize().y/2) - 30));
+    lifebar.setSize(sf::Vector2f(bar_width, 10));
+    lifebar.setPosition(sf::Vector2f(body.getPosition().x - (bar_width / 2),
+                                     body.getPosition().y - (Player::HEIGHT/2) - 30));
     target->draw(lifebar); // Draw the darkned part of the lifebar
 
-    lifebar.setSize(sf::Vector2f(this->m_rect.getSize().x * 1.6f * ((float)this->m_hp / (float)this->m_maxhp), 10));
+    lifebar.setSize(sf::Vector2f(bar_width * ((float)this->m_hp / (float)this->m_maxhp), 10));
     lifebar.setFillColor(sf::Color(200, 0, 0));
 
     target->draw(lifebar); // Draw the remaining part of the lifebar

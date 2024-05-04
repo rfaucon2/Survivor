@@ -3,11 +3,13 @@
 
 #include "Utilitary.h"
 
+
 class Player
 {
 public:
     const float WIDTH = 50;
     const float HEIGHT = 100;
+    const int   BASE_MAXHP = 100;
 
 private:
     sf::Rect<float> m_rect;
