@@ -22,7 +22,7 @@ private:
 
     Player*                 m_player;
 
-    std::vector<Ennemy*>    m_ennemies;
+    std::vector<Ennemy>    m_ennemies;
 
 public:
     // Constructor and destructor 

@@ -51,9 +51,11 @@ int Application::Update()
     
     this->m_window->setView(this->m_viewport);
 
-
-    for (Ennemy* ennemy : this->m_ennemies)
-        ennemy->update(dt, this->m_player->get_pos());
+    util::print_vec(this->m_ennemies[0].m_pos);
+    for (Ennemy &ennemy : this->m_ennemies)
+        ennemy.update(dt, this->m_player->get_pos());
+    util::print_vec(this->m_ennemies[0].m_pos);
+    
     return 0;
 }
 
@@ -78,8 +80,8 @@ void Application::Draw()
         }
     }
 
-    for (Ennemy* ennemy : this->m_ennemies)
-        ennemy->draw(this->m_window);
+    for (Ennemy ennemy : this->m_ennemies)
+        ennemy.draw(this->m_window);
 
     this->m_player->Draw(this->m_window);
 
@@ -88,7 +90,7 @@ void Application::Draw()
 
 void Application::spawn_ennemy(sf::Vector2f pos)
 {
-    this->m_ennemies.push_back(new Ennemy(sf::Vector2f(100.0f, 100.0f)));
+    this->m_ennemies.push_back(Ennemy(pos, Ennemy::BASE_SPEED, Ennemy::BASE_RADIUS));
 }
 
 // Accessor

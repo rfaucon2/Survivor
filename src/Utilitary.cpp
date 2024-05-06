@@ -11,3 +11,8 @@ sf::Vector2f util::normalize(sf::Vector2f v)
         return sf::Vector2f(0, 0);
     return v / util::size(v);
 }
+
+void util::print_vec(sf::Vector2f v, bool ln)
+{
+    std::cout << "<" << v.x << ", " << v.y << ">" << (ln ? '\n' : '\0');
+}

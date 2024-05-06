@@ -10,6 +10,7 @@ namespace util
 {
     float size(sf::Vector2f v);
     sf::Vector2f normalize(sf::Vector2f v);
+    void print_vec(sf::Vector2f v, bool ln = true);
 } // namespace util
 
 
