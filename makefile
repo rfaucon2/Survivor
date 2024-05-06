@@ -3,7 +3,7 @@ EXE = target/Survivor
 SRC = $(wildcard src/*.cpp)
 OBJ = $(subst src, build, $(patsubst %.cpp, %.o, $(SRC)))
 
-DBG = -g
+DBG = 
 
 INCLUDE = -Iinclude
 LIB = -L lib -lsfml-graphics -lsfml-window -lsfml-system -lopengl32 -lsfml-audio 
