@@ -2,6 +2,7 @@
 
 // Constructor and destructor
 Application::Application()
+    : m_waves_nb(0)
 {
     this->m_window = new sf::RenderWindow(sf::VideoMode(Application::WIDTH, Application::HEIGHT), "Survivor", sf::Style::Close);
     this->m_viewport = sf::View(sf::Vector2f(0, 0), sf::Vector2f(Application::WIDTH, Application::HEIGHT));
@@ -22,7 +23,8 @@ Application::~Application()
 // Class method
 int Application::Update()
 {
-    float dt = this->m_clock.restart().asSeconds();
+    float dt = (this->m_clock.getElapsedTime()-this->m_elapsed).asSeconds();
+    this->m_elapsed = this->m_clock.getElapsedTime();
     sf::Event ev;
     while(this->m_window->pollEvent(ev))
     {
@@ -30,6 +32,17 @@ int Application::Update()
         {
             this->m_window->close();
             return 1;
+        }
+    }
+
+    if (roundf(this->m_elapsed.asSeconds()/7) > this->m_waves_nb)
+    {
+        this->m_waves_nb += 1;
+        for (int i = 0; i < m_waves_nb; i++)
+        {
+            sf::Vector2f pos(rand()-0x3fff, rand()-0x3fff);
+            pos = ((rand() % 100) + 800.0f) * util::normalize(pos);
+            this->spawn_ennemy(pos + this->m_player->get_pos());
         }
     }
 
@@ -51,10 +64,9 @@ int Application::Update()
     
     this->m_window->setView(this->m_viewport);
 
-    util::print_vec(this->m_ennemies[0].m_pos);
-    for (Ennemy &ennemy : this->m_ennemies)
+    for (Ennemy &ennemy : this->m_ennemies){
         ennemy.update(dt, this->m_player->get_pos());
-    util::print_vec(this->m_ennemies[0].m_pos);
+    }
     
     return 0;
 }
@@ -84,6 +96,8 @@ void Application::Draw()
         ennemy.draw(this->m_window);
 
     this->m_player->Draw(this->m_window);
+
+
 
     this->m_window->display();
 }

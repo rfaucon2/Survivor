@@ -5,6 +5,9 @@
 #include <SFML/System.hpp>
 #include <iostream>
 #include <math.h>
+#include <vector>
+#include <time.h>
+#include <random>
 
 namespace util
 {
