@@ -9,7 +9,7 @@ Application::Application()
 
     this->m_window->setView(this->m_viewport);
 
-    this->m_background_image.loadFromFile("resources/download.jpeg");
+    this->m_background_image.loadFromFile("resources/background.jpeg");
     this->m_background = sf::Sprite(this->m_background_image);
 
     this->m_player = new Player();
