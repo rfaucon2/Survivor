@@ -4,7 +4,6 @@
 #include "Utilitary.h"
 #include "Player.h"
 #include "Ennemy.h"
-#include <vector>
 
 class Application
 {
@@ -15,6 +14,7 @@ public:
 private:
     sf::RenderWindow*       m_window;
     sf::Clock               m_clock;
+    sf::Time                m_elapsed;
     sf::View                m_viewport;
 
     sf::Texture             m_background_image;
@@ -22,7 +22,8 @@ private:
 
     Player*                 m_player;
 
-    std::vector<Ennemy>    m_ennemies;
+    std::vector<Ennemy>     m_ennemies;
+    int                     m_waves_nb;
 
 public:
     // Constructor and destructor 
