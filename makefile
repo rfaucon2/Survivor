@@ -1,15 +1,26 @@
-EXE = target/Survivor
+EXE 		= target/Survivor
 
-SRC = $(wildcard src/*.cpp)
-OBJ = $(subst src, build, $(patsubst %.cpp, %.o, $(SRC)))
+SRC			= $(wildcard src/*.cpp)
+OBJ 		= $(subst src, build, $(patsubst %.cpp, %.o, $(SRC)))
 
-DBG = 
+DBG 		= 
 
-INCLUDE = -Iinclude
-LIB = -L lib -lsfml-graphics -lsfml-window -lsfml-system -lopengl32 -lsfml-audio 
+INCLUDE 	= -Iinclude
+LIB 		= -L lib -lsfml-graphics -lsfml-window -lsfml-system -lopengl32
 
-all:  link
+all: link
 remake: clean all
+
+run:
+	$(EXE)
+
+clean:
+	erase $(subst build/, build\, $(OBJ))
+
+mkbuild:
+	mkdir build
+
+
 
 build/%.o: src/%.cpp
 	g++ $(INCLUDE) -c src/$*.cpp -o build/$*.o $(DBG)
@@ -17,9 +28,3 @@ build/%.o: src/%.cpp
 
 link: $(OBJ)
 	g++ $(OBJ) -o $(EXE) $(LIB) $(DBG)
-
-run:
-	$(EXE)
-
-clean:
-	erase $(subst build/, build\, $(OBJ))

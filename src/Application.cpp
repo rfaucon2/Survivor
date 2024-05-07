@@ -51,10 +51,8 @@ int Application::Update()
     
     this->m_window->setView(this->m_viewport);
 
-    util::print_vec(this->m_ennemies[0].m_pos);
     for (Ennemy &ennemy : this->m_ennemies)
         ennemy.update(dt, this->m_player->get_pos());
-    util::print_vec(this->m_ennemies[0].m_pos);
     
     return 0;
 }
