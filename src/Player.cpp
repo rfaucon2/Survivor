@@ -2,10 +2,20 @@
 
 Player::Player()
 {
+    // World related variables
     this->m_rect = sf::Rect<float>(0, 0, this->WIDTH, this->HEIGHT);
     this->m_speed = 1000;
+    // Health variables
     this->m_maxhp = Player::BASE_MAXHP;
     this->m_hp = 100;
+    // Level variables
+    this->m_level = 1;
+    this->m_exp = 0;
+    // Spell variables
+    std::vector<SpellType> m_available_spells = {SpellType::CHICKEN};
+    std::vector<float> m_acquisition_time = {0.f};
+    std::vector<float> m_spell_dmg_mult = {1.0};
+    std::vector<float> m_spell_cdr_mult = {1.0};
 }
 
 void Player::Update(float dt)
@@ -51,6 +61,51 @@ void Player::Draw(sf::RenderTarget* target)
     target->draw(lifebar); // Draw the remaining part of the lifebar
 
 }
+SpellType Player::has_to_gen_proj(sf::Time since_start)
+{
+    
+    return SpellType::NONE;
+}
+
+void Player::give_exp(unsigned int exp, sf::Time time)
+{
+    // Give exp
+    this->m_exp += exp;
+
+    // Check for level up
+    int thresh = int((float)Player::LVL_UP_THRESH * pow(Player::THRESH_MULTIPLIER, this->m_level - 1));
+    
+    if(this->m_exp >= thresh)
+        return; // No level up
+    
+
+    // Update exp and level
+    this->m_exp -= thresh;
+    this->m_level += 1;
+
+    // Update HP
+    this->m_maxhp *= Player::HP_MULTIPLIER;
+    this->m_hp *= Player::HP_MULTIPLIER;
+
+    // Check if new spell acquiered
+    int current_spell_count = this->m_available_spells.size();
+    SpellType next_spell_id = static_cast<SpellType>(current_spell_count);
+    
+    // Check if there is no more spell to learn
+    if((int)next_spell_id >= spell_data.size())
+        return; // No more spell
+    
+    // Check if player has lhe requiered level
+    std::vector<float> data = spell_data.at(next_spell_id);
+    if(this->m_level >= data[0])
+    {
+        this->m_available_spells.push_back(next_spell_id);
+        this->m_acquisition_time.push_back(time.asSeconds());
+        this->m_spell_dmg_mult.push_back(1.f);
+        this->m_spell_cdr_mult.push_back(1.f);
+    }
+}
+
 
 sf::Vector2f Player::get_pos() const
 {
@@ -67,4 +122,27 @@ int Player::get_hp() const
 int Player::get_maxhp() const
 {
     return this->m_maxhp;
+}
+
+
+Projectile::Projectile(sf::Vector2f start_pos, float angle, float dmg, SpellType type, sf::Texture* tex)
+{
+    this->m_pos = start_pos;
+    this->m_speed = sf::Vector2f(cos(angle), sin(angle)) * Projectile::SPEED;
+    this->m_dmg = dmg;
+    this->m_type = type;
+    
+}
+Projectile::~Projectile()
+{
+
+}
+
+void Projectile::Update(float dt)
+{
+    this->m_pos += this->m_speed * dt;
+}
+void Projectile::Draw(sf::RenderTarget* target)
+{
+
 }

@@ -70,7 +70,6 @@ int Application::Update()
     
     return 0;
 }
-
 void Application::Draw()
 {
     this->m_window->clear(sf::Color(0x1f1f1fff));
