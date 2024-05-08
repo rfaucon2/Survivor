@@ -52,7 +52,7 @@ public:
     
     void Update(float dt);
     void Draw(sf::RenderTarget* target);
-    SpellType has_to_gen_proj(sf::Time since_start);
+    std::vector<SpellType> has_to_gen_proj(sf::Time since_start);
 
     void give_exp(unsigned int exp, sf::Time time);
 
@@ -61,25 +61,32 @@ public:
     sf::Vector2f get_size() const;
     int get_hp() const;
     int get_maxhp() const;
+    float get_walking_angle() const;
 };
 
 class Projectile
 {
+public:
+    static const float DISPAW_DIST;
+    static const float SPEED;
+    static const float WIDTH;
+    static const float HEIGHT;
 private:
-    const float SPEED = 1000;
 
-    SpellType     m_type;
+    SpellType       m_type;
     float           m_dmg;
     sf::Vector2f    m_pos;
     sf::Vector2f    m_speed;
     sf::Sprite      m_sprite;
 
 public:
-    Projectile(sf::Vector2f start_pos, float angle, float dmg, SpellType type, sf::Texture* tex);
+    Projectile(sf::Vector2f start_pos, float angle, SpellType type, sf::Texture* tex);
     ~Projectile();
 
     void Update(float dt);
     void Draw(sf::RenderTarget* target);
+
+    sf::Vector2f get_pos() const;
 };
 
 #endif

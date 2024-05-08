@@ -23,6 +23,8 @@ public:
     void update(float dt, sf::Vector2f player_pos);
 
     void draw(sf::RenderWindow* window);
+
+    sf::Vector2f get_pos() const;
 };
 
 #endif

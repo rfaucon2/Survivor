@@ -12,10 +12,10 @@ Player::Player()
     this->m_level = 1;
     this->m_exp = 0;
     // Spell variables
-    std::vector<SpellType> m_available_spells = {SpellType::CHICKEN};
-    std::vector<float> m_acquisition_time = {0.f};
-    std::vector<float> m_spell_dmg_mult = {1.0};
-    std::vector<float> m_spell_cdr_mult = {1.0};
+    this->m_available_spells = {SpellType::CHICKEN};
+    this->m_acquisition_time = {0.f};
+    this->m_spell_dmg_mult = {1.0};
+    this->m_spell_cdr_mult = {1.0};
 }
 
 void Player::Update(float dt)
@@ -61,10 +61,23 @@ void Player::Draw(sf::RenderTarget* target)
     target->draw(lifebar); // Draw the remaining part of the lifebar
 
 }
-SpellType Player::has_to_gen_proj(sf::Time since_start)
+std::vector<SpellType> Player::has_to_gen_proj(sf::Time since_start)
 {
-    
-    return SpellType::NONE;
+    static float previous_time = 0;
+
+    std::vector<SpellType> out;
+    for(int i = 0; i < this->m_available_spells.size(); i++)
+    {
+
+        float cd = this->m_spell_cdr_mult[i] * spell_data.at(this->m_available_spells[i])[2];
+
+        float last_t = fmod(previous_time - this->m_acquisition_time[i], cd);
+        float t = fmod(since_start.asSeconds() - this->m_acquisition_time[i], cd);
+        if(t < last_t)
+            out.push_back(this->m_available_spells[i]);
+    }
+    previous_time = since_start.asSeconds();
+    return out;
 }
 
 void Player::give_exp(unsigned int exp, sf::Time time)
@@ -123,15 +136,34 @@ int Player::get_maxhp() const
 {
     return this->m_maxhp;
 }
+float Player::get_walking_angle() const
+{
+    return 0;
+}
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////// class Projectile definition ///////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Projectile::Projectile(sf::Vector2f start_pos, float angle, float dmg, SpellType type, sf::Texture* tex)
+const float Projectile::DISPAW_DIST = 5000;
+const float Projectile::SPEED       = 1000;
+const float Projectile::WIDTH       = 20;
+const float Projectile::HEIGHT      = 10;
+
+Projectile::Projectile(sf::Vector2f start_pos, float angle, SpellType type, sf::Texture* tex)
 {
     this->m_pos = start_pos;
-    this->m_speed = sf::Vector2f(cos(angle), sin(angle)) * Projectile::SPEED;
-    this->m_dmg = dmg;
+    this->m_speed = sf::Vector2f(cos(angle), -sin(angle)) * Projectile::SPEED;
+    this->m_dmg = spell_data.at(type)[1];
     this->m_type = type;
     
+    this->m_sprite = sf::Sprite();
+    this->m_sprite.setTexture(*tex);
+    
+    this->m_sprite.setScale(sf::Vector2f(Projectile::WIDTH / tex->getSize().x, Projectile::HEIGHT / tex->getSize().y));
+    this->m_sprite.setOrigin(this->m_sprite.getGlobalBounds().getSize() * 0.5f);
+
+    this->m_sprite.setRotation(-angle * 180 / M_PI);
 }
 Projectile::~Projectile()
 {
@@ -144,5 +176,11 @@ void Projectile::Update(float dt)
 }
 void Projectile::Draw(sf::RenderTarget* target)
 {
+    this->m_sprite.setPosition(this->m_pos);
+    target->draw(this->m_sprite);
+}
 
+sf::Vector2f Projectile::get_pos() const
+{
+    return this->m_pos;
 }

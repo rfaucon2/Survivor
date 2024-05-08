@@ -13,6 +13,8 @@ Application::Application()
     this->m_background = sf::Sprite(this->m_background_image);
 
     this->m_player = new Player();
+    this->m_projectile_texture_place_holder.loadFromFile("resources/placeholder_bullet.png");
+    this->m_projectiles.push_back(Projectile(this->m_player->get_pos(), M_PI_2, SpellType::CHICKEN, &this->m_projectile_texture_place_holder));
 }
 Application::~Application()
 {
@@ -23,8 +25,11 @@ Application::~Application()
 // Class method
 int Application::Update()
 {
+    // Update time variables
     float dt = (this->m_clock.getElapsedTime()-this->m_elapsed).asSeconds();
     this->m_elapsed = this->m_clock.getElapsedTime();
+    
+    // Process events
     sf::Event ev;
     while(this->m_window->pollEvent(ev))
     {
@@ -35,6 +40,38 @@ int Application::Update()
         }
     }
 
+    // Handle ennemy generation
+    this->_update_ennemy_generation();
+
+    this->m_player->Update(dt);
+
+    // Handle viewport movement
+    this->_update_viewport_movement();
+    
+
+    // Update all ennemies
+    for(Ennemy &ennemy : this->m_ennemies){
+        ennemy.update(dt, this->m_player->get_pos());
+    }
+
+    // Update all projectiles
+    for(int i = 0; i < this->m_projectiles.size(); i++){
+        this->m_projectiles[i].Update(dt);
+
+        float dist_to_player = util::size(this->m_projectiles[i].get_pos() - this->m_player->get_pos());
+        // Delete projectile if too far away
+        if(dist_to_player > this->m_projectiles[i].DISPAW_DIST)
+            this->m_projectiles.erase(this->m_projectiles.begin()+(i--));
+        
+    }
+
+    // Check if new projectiles have to be created
+    this->_update_projectile_creation();
+    
+    return 0;
+}
+void Application::_update_ennemy_generation()
+{
     if (roundf(this->m_elapsed.asSeconds()/7) > this->m_waves_nb)
     {
         this->m_waves_nb += 1;
@@ -45,10 +82,9 @@ int Application::Update()
             this->spawn_ennemy(pos + this->m_player->get_pos());
         }
     }
-
-    this->m_player->Update(dt);
-
-    // Check if the viewport has to be moved
+}
+void Application::_update_viewport_movement()
+{
     sf::Vector2f delta = this->m_player->get_pos() - this->m_viewport.getCenter();
     int w = Application::WIDTH / 6;
     int h = Application::HEIGHT / 6;
@@ -63,13 +99,19 @@ int Application::Update()
         this->m_viewport.move(0, delta.y + h);
     
     this->m_window->setView(this->m_viewport);
-
-    for (Ennemy &ennemy : this->m_ennemies){
-        ennemy.update(dt, this->m_player->get_pos());
-    }
-    
-    return 0;
 }
+void Application::_update_projectile_creation()
+{
+    std::vector<SpellType> new_proj = this->m_player->has_to_gen_proj(this->m_elapsed);
+    if(new_proj != std::vector<SpellType>())
+    {
+        for(int i = 0; i < new_proj.size(); i++)
+        {
+            this->m_projectiles.push_back(Projectile(this->m_player->get_pos(), this->m_player->get_walking_angle(), new_proj[i], &this->m_projectile_texture_place_holder));
+        }
+    }
+}
+
 void Application::Draw()
 {
     this->m_window->clear(sf::Color(0x1f1f1fff));
@@ -93,10 +135,11 @@ void Application::Draw()
 
     for (Ennemy ennemy : this->m_ennemies)
         ennemy.draw(this->m_window);
+    
+    for(Projectile proj : this->m_projectiles)
+        proj.Draw(this->m_window);
 
     this->m_player->Draw(this->m_window);
-
-
 
     this->m_window->display();
 }

@@ -5,6 +5,7 @@
 #include <SFML/System.hpp>
 
 #include <iostream>
+#define _USE_MATH_DEFINES
 #include <math.h>
 #include <vector>
 #include <time.h>

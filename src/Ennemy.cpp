@@ -25,3 +25,8 @@ void Ennemy::draw(sf::RenderWindow* window)
     sprite.setFillColor(sf::Color(65, 120, 30));
     window->draw(sprite);
 }
+
+sf::Vector2f Ennemy::get_pos() const
+{
+    return this->m_pos;
+}
