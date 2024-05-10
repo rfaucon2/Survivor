@@ -34,6 +34,7 @@ void Player::Update(float dt)
     dp = util::normalize(dp) * dt * this->m_speed;
     this->m_rect.top += dp.y;
     this->m_rect.left += dp.x;
+    this->m_walking_angle = -atan2(dp.y, dp.x);
 }
 void Player::Draw(sf::RenderTarget* target)
 {
@@ -138,7 +139,7 @@ int Player::get_maxhp() const
 }
 float Player::get_walking_angle() const
 {
-    return 0;
+    return this->m_walking_angle;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,7 +147,7 @@ float Player::get_walking_angle() const
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const float Projectile::DISPAW_DIST = 5000;
-const float Projectile::SPEED       = 1000;
+const float Projectile::SPEED       = 3000;
 const float Projectile::WIDTH       = 20;
 const float Projectile::HEIGHT      = 10;
 

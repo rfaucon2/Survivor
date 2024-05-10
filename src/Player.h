@@ -35,6 +35,7 @@ private:
     // World related variables
     sf::Rect<float> m_rect;
     float           m_speed;
+    float           m_walking_angle;
     // Health variables
     int             m_maxhp;
     int             m_hp;
