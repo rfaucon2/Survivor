@@ -26,6 +26,14 @@ void Ennemy::draw(sf::RenderWindow* window)
     window->draw(sprite);
 }
 
+void Ennemy::deal_damange(float dmg)
+{
+    this->m_health -= dmg;
+}
+float Ennemy::get_health() const
+{
+    return this->m_health;
+}
 sf::Vector2f Ennemy::get_pos() const
 {
     return this->m_pos;

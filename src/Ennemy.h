@@ -15,6 +15,7 @@ private:
     float           m_speed;
     float           m_radius;
     sf::Rect<float> m_rect;
+    float           m_health;
 
 public:
     Ennemy(sf::Vector2f pos, float speed, float radius);
@@ -24,6 +25,8 @@ public:
 
     void draw(sf::RenderWindow* window);
 
+    void deal_damange(float dmg);
+    float get_health() const;
     sf::Vector2f get_pos() const;
 };
 
