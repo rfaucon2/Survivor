@@ -11,6 +11,7 @@ Application::Application()
 
     this->m_background_image.loadFromFile("resources/background.jpeg");
     this->m_background = sf::Sprite(this->m_background_image);
+    this->m_background.setColor(sf::Color(0xcccccccc));
 
     this->m_player = new Player();
     this->m_projectile_texture_place_holder.loadFromFile("resources/placeholder_bullet.png");
