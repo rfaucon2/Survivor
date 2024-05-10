@@ -9,7 +9,7 @@ class Application
 {
 public:
     const unsigned int  WIDTH = 1080;
-    const unsigned int  HEIGHT = 720;
+    const unsigned int  HEIGHT = 1080;
     
 private:
     sf::RenderWindow*       m_window;
