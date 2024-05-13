@@ -1,2 +1,3 @@
 target/*.dll
 build/*.o
+target/*.exe

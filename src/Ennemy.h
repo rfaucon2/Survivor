@@ -23,6 +23,7 @@ private:
     float           m_radius;
     sf::Rect<float> m_rect;
     sf::Sprite      m_sprite;
+    float           m_health;
 
     static std::map<e_monsters, sf::Texture> textures;
 public:
@@ -32,6 +33,10 @@ public:
     void update(float dt, sf::Vector2f player_pos);
 
     void draw(sf::RenderWindow* window);
+
+    void deal_damange(float dmg);
+    float get_health() const;
+    sf::Vector2f get_pos() const;
 };
 
 #endif
