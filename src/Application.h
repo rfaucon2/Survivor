@@ -8,7 +8,7 @@
 class Application
 {
 public:
-    const unsigned int  WIDTH = 1080;
+    const unsigned int  WIDTH = 1280;
     const unsigned int  HEIGHT = 720;
     
 private:
@@ -34,7 +34,7 @@ public:
     int Update();
     void Draw();
 
-    void spawn_ennemy(sf::Vector2f pos);
+    void spawn_ennemy(sf::Vector2f pos, e_monsters type = e_monsters::SPIRIT);
 
     // Accessor
     bool is_window_open() const;

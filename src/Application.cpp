@@ -102,9 +102,9 @@ void Application::Draw()
     this->m_window->display();
 }
 
-void Application::spawn_ennemy(sf::Vector2f pos)
+void Application::spawn_ennemy(sf::Vector2f pos, e_monsters type)
 {
-    this->m_ennemies.push_back(Ennemy(pos, Ennemy::BASE_SPEED, Ennemy::BASE_RADIUS));
+    this->m_ennemies.push_back(Ennemy(pos, Ennemy::BASE_SPEED, Ennemy::BASE_RADIUS, type));
 }
 
 // Accessor
