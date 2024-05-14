@@ -1,4 +1,4 @@
-EXE 		= target/Survivor
+EXE 		= Survivor
 
 SRC			= $(wildcard src/*.cpp)
 OBJ 		= $(subst src, build, $(patsubst %.cpp, %.o, $(SRC)))
