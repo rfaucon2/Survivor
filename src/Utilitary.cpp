@@ -36,5 +36,4 @@ float util::square_sdf(sf::Vector2f center, sf::Vector2f size, sf::Vector2f poin
 {
     sf::Vector2f q = abs(point-center)-size;
     return util::size(max(q, 0.)) + std::min(std::max(q.x, q.y), 0.f);
-    return 1.f;
 }

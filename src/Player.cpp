@@ -12,12 +12,10 @@ Player::Player()
     this->m_level = 1;
     this->m_exp = 0;
     // Spell variables
-    this->m_available_spells = {SpellType::CHICKEN};
-    this->m_acquisition_time = {0.f};
-    this->m_spell_dmg_mult = {1.0};
-    this->m_spell_cdr_mult = {1.0};
-
-    this->m_hit_cd = 1.0f;
+    this->m_available_spells = {SpellType::CHICKEN, SpellType::HOMMING};
+    this->m_acquisition_time = {0.f, 0.1f};
+    this->m_spell_dmg_mult = {1.0, 1.0};
+    this->m_spell_cdr_mult = {1.0, 1.0};
 }
 
 void Player::Update(float dt)
@@ -122,7 +120,6 @@ void Player::give_exp(unsigned int exp, sf::Time time)
     }
 }
 
-
 sf::Vector2f Player::get_pos() const
 {
     return this->m_rect.getPosition();
@@ -176,25 +173,33 @@ Projectile::Projectile(sf::Vector2f start_pos, float angle, SpellType type, sf::
     
     this->m_sprite.setScale(sf::Vector2f(Projectile::WIDTH / tex->getSize().x, Projectile::HEIGHT / tex->getSize().y));
     this->m_sprite.setOrigin(this->m_sprite.getGlobalBounds().getSize() * 0.5f);
-
-    this->m_sprite.setRotation(-angle * 180 / M_PI);
 }
 Projectile::~Projectile()
 {
 
 }
 
-void Projectile::Update(float dt)
+void Projectile::Update(float dt, Ennemy* target)
 {
+    if(this->m_type == SpellType::HOMMING && target != nullptr)
+    {
+        this->m_speed = util::normalize(target->get_pos() - this->m_pos) * Projectile::SPEED;
+    }
+
     this->m_pos += this->m_speed * dt;
 }
 void Projectile::Draw(sf::RenderTarget* target)
 {
     this->m_sprite.setPosition(this->m_pos);
+    this->m_sprite.setRotation(atan2(this->m_speed.y, this->m_speed.x) * 180 / M_PI);
     target->draw(this->m_sprite);
 }
 
 sf::Vector2f Projectile::get_pos() const
 {
     return this->m_pos;
+}
+SpellType Projectile::get_type() const
+{
+    return this->m_type;
 }

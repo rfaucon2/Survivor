@@ -2,6 +2,7 @@
 #define PLAYER
 
 #include "Utilitary.h"
+#include "Ennemy.h"
 
 enum class SpellType
 {
@@ -89,10 +90,11 @@ public:
     Projectile(sf::Vector2f start_pos, float angle, SpellType type, sf::Texture* tex);
     ~Projectile();
 
-    void Update(float dt);
+    void Update(float dt, Ennemy* target = nullptr);
     void Draw(sf::RenderTarget* target);
 
     sf::Vector2f get_pos() const;
+    SpellType get_type() const;
 };
 
 #endif

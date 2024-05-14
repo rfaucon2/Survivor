@@ -45,10 +45,8 @@ int Application::Update()
     this->_update_ennemy_generation();
 
     this->m_player->Update(dt);
-
     // Handle viewport movement
     this->_update_viewport_movement();
-    
 
     // Update all ennemies
     for(Ennemy &ennemy : this->m_ennemies){
@@ -57,7 +55,29 @@ int Application::Update()
 
     // Update all projectiles
     for(int i = 0; i < this->m_projectiles.size(); i++){
-        this->m_projectiles[i].Update(dt);
+        if(this->m_projectiles[i].get_type() == SpellType::HOMMING)
+        {
+            // If there are ennemies
+            if(this->m_ennemies.size() > 0)
+            {
+                // Get closest ennemy
+                Ennemy closest = this->m_ennemies[0];
+
+                for(Ennemy e: this->m_ennemies)
+                    if(util::size(this->m_projectiles[i].get_pos() - e.get_pos()) < util::size(this->m_projectiles[i].get_pos() - closest.get_pos()))
+                        closest = e;  
+
+                this->m_projectiles[i].Update(dt, &closest);
+            }
+            else
+            {
+                this->m_projectiles[i].Update(dt);
+            }
+        }
+        else
+        {
+            this->m_projectiles[i].Update(dt);
+        }
 
         float dist_to_player = util::size(this->m_projectiles[i].get_pos() - this->m_player->get_pos());
         // Delete projectile if too far away
@@ -110,11 +130,11 @@ void Application::_update_projectile_creation()
     {
         for(int i = 0; i < new_proj.size(); i++)
         {
-            this->m_projectiles.push_back(Projectile(this->m_player->get_pos(), this->m_player->get_walking_angle(), new_proj[i], &this->m_projectile_texture_place_holder));
+            if(new_proj[i] != SpellType::HOMMING || (new_proj[i] == SpellType::HOMMING && this->m_ennemies.size() > 0))
+                this->m_projectiles.push_back(Projectile(this->m_player->get_pos(), this->m_player->get_walking_angle(), new_proj[i], &this->m_projectile_texture_place_holder));
         }
     }
 }
-
 void Application::_update_collisions()
 {
     for (Ennemy& ennemy : this->m_ennemies)
