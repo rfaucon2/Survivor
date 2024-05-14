@@ -16,6 +16,8 @@ Player::Player()
     this->m_acquisition_time = {0.f, 0.1f};
     this->m_spell_dmg_mult = {1.0, 1.0};
     this->m_spell_cdr_mult = {1.0, 1.0};
+
+    this->m_hit_cd = 1.f;
 }
 
 void Player::Update(float dt)
