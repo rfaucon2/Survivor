@@ -120,7 +120,7 @@ void Application::_update_collisions()
     {
         if (util::square_sdf(this->m_player->get_pos(), this->m_player->get_size()/2.f, ennemy.get_pos()) < Ennemy::BASE_RADIUS)
         {
-            this->m_player->receive_damage(1);
+            if (this->m_player->receive_damage(10, this->m_elapsed)) this->m_window->close();
         }
     }
 }

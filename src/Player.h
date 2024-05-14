@@ -43,10 +43,13 @@ private:
     unsigned int    m_level;
     unsigned int    m_exp;
     // Spell variables
-    std::vector<SpellType> m_available_spells;
-    std::vector<float> m_acquisition_time;
-    std::vector<float> m_spell_dmg_mult;
-    std::vector<float> m_spell_cdr_mult; // cooldown reduction multiplier
+    std::vector<SpellType>  m_available_spells;
+    std::vector<float>      m_acquisition_time;
+    std::vector<float>      m_spell_dmg_mult;
+    std::vector<float>      m_spell_cdr_mult; // cooldown reduction multiplier
+
+    sf::Time    m_last_hit_time;
+    float       m_hit_cd; // as seconds
 
 public:
     Player();
@@ -64,7 +67,7 @@ public:
     int get_maxhp() const;
     float get_walking_angle() const;
 
-    void receive_damage(int damage);
+    bool receive_damage(int damage, sf::Time current_time);
 };
 
 class Projectile

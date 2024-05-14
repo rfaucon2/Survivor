@@ -16,6 +16,8 @@ Player::Player()
     this->m_acquisition_time = {0.f};
     this->m_spell_dmg_mult = {1.0};
     this->m_spell_cdr_mult = {1.0};
+
+    this->m_hit_cd = 1.0f;
 }
 
 void Player::Update(float dt)
@@ -142,9 +144,15 @@ float Player::get_walking_angle() const
     return this->m_walking_angle;
 }
 
-void Player::receive_damage(int damage)
+bool Player::receive_damage(int damage, sf::Time current_time)
 {
-    this->m_hp -= damage;
+    if (current_time.asSeconds() - this->m_last_hit_time.asSeconds() > this->m_hit_cd)
+    {
+        this->m_hp -= damage;
+        this->m_last_hit_time = current_time;
+    }
+
+    return this->m_hp <= 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
