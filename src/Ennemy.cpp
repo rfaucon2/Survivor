@@ -3,7 +3,7 @@
 std::map<e_monsters, sf::Texture> Ennemy::textures;
 
 const float Ennemy::BASE_SPEED = 125;
-const float Ennemy::BASE_RADIUS = 13;
+const float Ennemy::BASE_RADIUS = 90;
 
 Ennemy::Ennemy(sf::Vector2f pos, float speed, float radius, e_monsters type)
     : m_pos(pos), m_radius(radius), m_speed(speed), m_rect(m_pos, sf::Vector2f(radius, radius))
@@ -18,6 +18,8 @@ Ennemy::Ennemy(sf::Vector2f pos, float speed, float radius, e_monsters type)
         Ennemy::textures[e_monsters::SPIRIT] = sf::Texture(placeholder);
     }
     this->m_sprite.setTexture(Ennemy::textures[type]);
+    this->m_sprite.setOrigin(this->m_sprite.getGlobalBounds().getSize() * 0.5f);
+    this->m_sprite.setScale(sf::Vector2f(radius / Ennemy::textures[type].getSize().x, radius / Ennemy::textures[type].getSize().y));
 }
 Ennemy::~Ennemy()
 {
