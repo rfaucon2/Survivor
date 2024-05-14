@@ -63,6 +63,8 @@ public:
     int get_hp() const;
     int get_maxhp() const;
     float get_walking_angle() const;
+
+    void receive_damage(int damage);
 };
 
 class Projectile

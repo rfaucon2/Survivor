@@ -68,7 +68,8 @@ int Application::Update()
 
     // Check if new projectiles have to be created
     this->_update_projectile_creation();
-    
+    this->_update_collisions();
+
     return 0;
 }
 void Application::_update_ennemy_generation()
@@ -109,6 +110,17 @@ void Application::_update_projectile_creation()
         for(int i = 0; i < new_proj.size(); i++)
         {
             this->m_projectiles.push_back(Projectile(this->m_player->get_pos(), this->m_player->get_walking_angle(), new_proj[i], &this->m_projectile_texture_place_holder));
+        }
+    }
+}
+
+void Application::_update_collisions()
+{
+    for (Ennemy& ennemy : this->m_ennemies)
+    {
+        if (util::square_sdf(this->m_player->get_pos(), this->m_player->get_size()/2.f, ennemy.get_pos()) < Ennemy::BASE_RADIUS)
+        {
+            this->m_player->receive_damage(1);
         }
     }
 }

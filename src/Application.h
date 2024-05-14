@@ -37,6 +37,7 @@ public:
     void _update_ennemy_generation();
     void _update_viewport_movement();
     void _update_projectile_creation();
+    void _update_collisions();
     
     void Draw();
 
