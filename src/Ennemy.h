@@ -6,8 +6,9 @@
 
 typedef enum
 {
-    GOBLIN,
-    SPIRIT
+    GOBLIN = 0,
+    SPIRIT,
+    SIZE
 } e_monsters;
 
 

@@ -81,7 +81,8 @@ void Application::_update_ennemy_generation()
         {
             sf::Vector2f pos(rand()-0x3fff, rand()-0x3fff);
             pos = ((rand() % 100) + 800.0f) * util::normalize(pos);
-            this->spawn_ennemy(pos + this->m_player->get_pos());
+            this->spawn_ennemy(pos + this->m_player->get_pos(),
+                               static_cast<e_monsters>(rand() % int(e_monsters::SIZE)));
         }
     }
 }
@@ -118,7 +119,7 @@ void Application::_update_collisions()
 {
     for (Ennemy& ennemy : this->m_ennemies)
     {
-        if (util::square_sdf(this->m_player->get_pos(), this->m_player->get_size()/2.f, ennemy.get_pos()) < Ennemy::BASE_RADIUS)
+        if (util::square_sdf(this->m_player->get_pos(), this->m_player->get_size()/2.f, ennemy.get_pos()) < Ennemy::BASE_RADIUS/2)
         {
             if (this->m_player->receive_damage(10, this->m_elapsed)) this->m_window->close();
         }
