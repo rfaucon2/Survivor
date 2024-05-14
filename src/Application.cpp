@@ -141,9 +141,30 @@ void Application::_update_collisions()
     {
         if (util::square_sdf(this->m_player->get_pos(), this->m_player->get_size()/2.f, ennemy.get_pos()) < Ennemy::BASE_RADIUS/2)
         {
-            if (this->m_player->receive_damage(10, this->m_elapsed)) this->m_window->close();
+            if (this->m_player->receive_damage(ennemy.get_dmg(), this->m_elapsed)) this->m_window->close();
         }
     }
+
+    std::vector<Ennemy>::iterator       e;
+    std::vector<Projectile>::iterator   p;
+
+    for (e = this->m_ennemies.begin(); e != this->m_ennemies.end(); e++)
+    {
+        for (p = this->m_projectiles.begin(); p != this->m_projectiles.end(); p++)
+        {
+            if (util::square_sdf(p->get_pos(), sf::Vector2f(p->WIDTH, p->HEIGHT)/2.f, e->get_pos()) < Ennemy::BASE_RADIUS/2)                                                                                                      
+            {
+                if (e->deal_damange(p->get_dmg()))
+                {
+                    this->m_ennemies.erase(e);
+                    e--;
+                }
+                this->m_projectiles.erase(p);
+                p--;
+            }
+        }
+    }
+    
 }
 
 void Application::Draw()

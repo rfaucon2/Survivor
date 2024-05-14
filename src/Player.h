@@ -95,6 +95,7 @@ public:
 
     sf::Vector2f get_pos() const;
     SpellType get_type() const;
+    float get_dmg() const;
 };
 
 #endif

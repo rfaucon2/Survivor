@@ -11,6 +11,11 @@ typedef enum
     SIZE
 } e_monsters;
 
+const std::map<e_monsters, std::vector<float>> ENNEMY_STATS = {
+//  {type, {health, damage}}
+    {e_monsters::GOBLIN, {6.0f,  9.0f}},
+    {e_monsters::SPIRIT, {10.0f, 7.0f}}
+};
 
 class Ennemy
 {
@@ -25,6 +30,7 @@ private:
     sf::Rect<float> m_rect;
     sf::Sprite      m_sprite;
     float           m_health;
+    float           m_dmg;
 
     static std::map<e_monsters, sf::Texture> textures;
 public:
@@ -35,9 +41,10 @@ public:
 
     void draw(sf::RenderWindow* window);
 
-    void deal_damange(float dmg);
+    bool deal_damange(float dmg);
     float get_health() const;
     sf::Vector2f get_pos() const;
+    float get_dmg() const;
 };
 
 #endif

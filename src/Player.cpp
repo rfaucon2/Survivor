@@ -4,7 +4,7 @@ Player::Player()
 {
     // World related variables
     this->m_rect = sf::Rect<float>(0, 0, this->WIDTH, this->HEIGHT);
-    this->m_speed = 1000;
+    this->m_speed = 700;
     // Health variables
     this->m_maxhp = Player::BASE_MAXHP;
     this->m_hp = 100;
@@ -204,4 +204,9 @@ sf::Vector2f Projectile::get_pos() const
 SpellType Projectile::get_type() const
 {
     return this->m_type;
+}
+
+float Projectile::get_dmg() const
+{
+    return this->m_dmg;
 }

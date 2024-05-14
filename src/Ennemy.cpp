@@ -20,6 +20,9 @@ Ennemy::Ennemy(sf::Vector2f pos, float speed, float radius, e_monsters type)
     this->m_sprite.setTexture(Ennemy::textures[type]);
     this->m_sprite.setOrigin(this->m_sprite.getGlobalBounds().getSize() * 0.5f);
     this->m_sprite.setScale(sf::Vector2f(radius / Ennemy::textures[type].getSize().x, radius / Ennemy::textures[type].getSize().y));
+
+    this->m_health = ENNEMY_STATS.at(type)[0];
+    this->m_dmg = ENNEMY_STATS.at(type)[1];
 }
 Ennemy::~Ennemy()
 {
@@ -37,9 +40,10 @@ void Ennemy::draw(sf::RenderWindow* window)
     window->draw(this->m_sprite);
 }
 
-void Ennemy::deal_damange(float dmg)
+bool Ennemy::deal_damange(float dmg)
 {
     this->m_health -= dmg;
+    return this->m_health <= 0;
 }
 float Ennemy::get_health() const
 {
@@ -48,4 +52,9 @@ float Ennemy::get_health() const
 sf::Vector2f Ennemy::get_pos() const
 {
     return this->m_pos;
+}
+
+float Ennemy::get_dmg() const
+{
+    return this->m_dmg;
 }
