@@ -54,37 +54,7 @@ int Application::Update()
     }
 
     // Update all projectiles
-    for(int i = 0; i < this->m_projectiles.size(); i++){
-        if(this->m_projectiles[i].get_type() == SpellType::HOMMING)
-        {
-            // If there are ennemies
-            if(this->m_ennemies.size() > 0)
-            {
-                // Get closest ennemy
-                Ennemy closest = this->m_ennemies[0];
-
-                for(Ennemy e: this->m_ennemies)
-                    if(util::size(this->m_projectiles[i].get_pos() - e.get_pos()) < util::size(this->m_projectiles[i].get_pos() - closest.get_pos()))
-                        closest = e;  
-
-                this->m_projectiles[i].Update(dt, &closest);
-            }
-            else
-            {
-                this->m_projectiles[i].Update(dt);
-            }
-        }
-        else
-        {
-            this->m_projectiles[i].Update(dt);
-        }
-
-        float dist_to_player = util::size(this->m_projectiles[i].get_pos() - this->m_player->get_pos());
-        // Delete projectile if too far away
-        if(dist_to_player > this->m_projectiles[i].DISPAW_DIST)
-            this->m_projectiles.erase(this->m_projectiles.begin()+(i--));
-        
-    }
+    this->_update_projectiles(dt);
 
     // Check if new projectiles have to be created
     this->_update_projectile_creation();
@@ -135,8 +105,43 @@ void Application::_update_projectile_creation()
         }
     }
 }
+void Application::_update_projectiles(float dt)
+{
+    for(int i = 0; i < this->m_projectiles.size(); i++){
+        if(this->m_projectiles[i].get_type() == SpellType::HOMMING)
+        {
+            // If there are ennemies
+            if(this->m_ennemies.size() > 0)
+            {
+                // Get closest ennemy
+                Ennemy closest = this->m_ennemies[0];
+
+                for(Ennemy e: this->m_ennemies)
+                    if(util::size(this->m_projectiles[i].get_pos() - e.get_pos()) < util::size(this->m_projectiles[i].get_pos() - closest.get_pos()))
+                        closest = e;  
+
+                this->m_projectiles[i].Update(dt, &closest);
+            }
+            else
+            {
+                this->m_projectiles[i].Update(dt);
+            }
+        }
+        else
+        {
+            this->m_projectiles[i].Update(dt);
+        }
+
+        float dist_to_player = util::size(this->m_projectiles[i].get_pos() - this->m_player->get_pos());
+        // Delete projectile if too far away
+        if(dist_to_player > this->m_projectiles[i].DISPAW_DIST)
+            this->m_projectiles.erase(this->m_projectiles.begin()+(i--));
+        
+    }
+}
 void Application::_update_collisions()
 {
+    // Ennemy to Player collision
     for (Ennemy& ennemy : this->m_ennemies)
     {
         if (util::square_sdf(this->m_player->get_pos(), this->m_player->get_size()/2.f, ennemy.get_pos()) < Ennemy::BASE_RADIUS/2)
@@ -145,6 +150,7 @@ void Application::_update_collisions()
         }
     }
 
+    // Projectile to Enney collision
     std::vector<Ennemy>::iterator       e;
     std::vector<Projectile>::iterator   p;
 
