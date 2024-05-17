@@ -89,7 +89,7 @@ void Player::give_exp(unsigned int exp, sf::Time time)
 {
     // Give exp
     this->m_exp += exp;
-    std::cout << this->m_level << "\n";
+    std::cout << this->m_available_spells.size() << "\n";
     // Check for level up
     int thresh = int((float)Player::LVL_UP_THRESH * pow(Player::THRESH_MULTIPLIER, this->m_level - 1));
     

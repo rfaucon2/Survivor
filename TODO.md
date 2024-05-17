@@ -8,8 +8,9 @@ Projectile:
 xp system:
     [x] gain xp when killing mob
     [x] level up system
-    [] Acquire spell on level up
-    [] xp bar on top of the screen
+    [x] Acquire spell on level up
+    [x] xp bar on top of the screen
+    [] display level
 
 Ennemy:
     [] rebalance stats

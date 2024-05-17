@@ -41,6 +41,8 @@ public:
     void _update_collisions();
     
     void Draw();
+    void _draw_background();
+    void _draw_exp_bar();
 
     void spawn_ennemy(sf::Vector2f pos, e_monsters type = e_monsters::SPIRIT);
 

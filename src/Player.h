@@ -28,7 +28,7 @@ public: // Class constants
     const float WIDTH               = 35;
     const float HEIGHT              = 70;
     const int   BASE_MAXHP          = 100;
-    const float HP_MULTIPLIER       = 1.1f;
+    const float HP_MULTIPLIER       = 1.3f;
     const int   LVL_UP_THRESH       = 100;
     const float THRESH_MULTIPLIER   = 1.3f;
 

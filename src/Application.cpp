@@ -177,8 +177,21 @@ void Application::_update_collisions()
 void Application::Draw()
 {
     this->m_window->clear(sf::Color(0x1f1f1fff));
+    this->_draw_background();
 
-    // Apply background
+    for (Ennemy ennemy : this->m_ennemies)
+        ennemy.draw(this->m_window);
+    
+    for(Projectile proj : this->m_projectiles)
+        proj.Draw(this->m_window);
+
+    this->m_player->Draw(this->m_window);
+    this->_draw_exp_bar();
+
+    this->m_window->display();
+}
+void Application::_draw_background()
+{
     sf::Vector2f img_size = this->m_background.getGlobalBounds().getSize();
     sf::Vector2f view_pos = this->m_viewport.getCenter();
     sf::Vector2f tl = sf::Vector2f(int(view_pos.x / img_size.x) * img_size.x, int(view_pos.y / img_size.y) * img_size.y);
@@ -194,18 +207,22 @@ void Application::Draw()
             this->m_window->draw(this->m_background);
         }
     }
+}
+void Application::_draw_exp_bar()
+{
+    float player_exp = this->m_player->get_exp();
+    float player_thresh = this->m_player->get_exp_thresh();
+    const float height = 20;
+    const float width = Application::WIDTH;
 
-    for (Ennemy ennemy : this->m_ennemies)
-        ennemy.draw(this->m_window);
-    
-    for(Projectile proj : this->m_projectiles)
-        proj.Draw(this->m_window);
-
-    this->m_player->Draw(this->m_window);
-    
-    // Display exp bar
-
-    this->m_window->display();
+    sf::RectangleShape rs;
+    rs.setSize(sf::Vector2f(width, height));
+    rs.setFillColor(sf::Color(0x1ff01025));
+    rs.setPosition(this->m_viewport.getCenter() + sf::Vector2f(Application::WIDTH, Application::HEIGHT) * (-0.5f));
+    this->m_window->draw(rs); // Draw background
+    rs.setSize(sf::Vector2f(width* (player_exp / player_thresh), height));
+    rs.setFillColor(sf::Color(0x1ff010ff));
+    this->m_window->draw(rs); // Draw background
 }
 
 void Application::spawn_ennemy(sf::Vector2f pos, e_monsters type)
