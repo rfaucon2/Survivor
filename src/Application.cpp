@@ -160,8 +160,9 @@ void Application::_update_collisions()
         {
             if (util::square_sdf(p->get_pos(), sf::Vector2f(p->WIDTH, p->HEIGHT)/2.f, e->get_pos()) < Ennemy::BASE_RADIUS/2)                                                                                                      
             {
-                if (e->deal_damange(p->get_dmg()))
+                if (e->deal_damage(p->get_dmg()))
                 {
+                    
                     this->m_ennemies.erase(e);
                     e--;
                 }
@@ -201,6 +202,8 @@ void Application::Draw()
         proj.Draw(this->m_window);
 
     this->m_player->Draw(this->m_window);
+    
+    // Display exp bar
 
     this->m_window->display();
 }

@@ -41,7 +41,7 @@ public:
 
     void draw(sf::RenderWindow* window);
 
-    bool deal_damange(float dmg);
+    bool deal_damage(float dmg);
     float get_health() const;
     sf::Vector2f get_pos() const;
     float get_dmg() const;
