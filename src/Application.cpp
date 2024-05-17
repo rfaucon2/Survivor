@@ -140,7 +140,7 @@ void Application::_update_projectiles(float dt)
     }
 }
 void Application::_update_collisions()
-{
+{  
     // Ennemy to Player collision
     for (Ennemy& ennemy : this->m_ennemies)
     {
@@ -162,7 +162,7 @@ void Application::_update_collisions()
             {
                 if (e->deal_damage(p->get_dmg()))
                 {
-                    
+                    this->m_player->give_exp(e->get_exp(), this->m_elapsed);
                     this->m_ennemies.erase(e);
                     e--;
                 }

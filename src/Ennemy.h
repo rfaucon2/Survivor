@@ -12,9 +12,9 @@ typedef enum
 } e_monsters;
 
 const std::map<e_monsters, std::vector<float>> ENNEMY_STATS = {
-//  {type, {health, damage}}
-    {e_monsters::GOBLIN, {6.0f,  9.0f}},
-    {e_monsters::SPIRIT, {10.0f, 7.0f}}
+//  {type, {health, damage, exp}}
+    {e_monsters::GOBLIN, {6.0f,  9.0f, 10.f}},
+    {e_monsters::SPIRIT, {10.0f, 7.0f, 21.f}}
 };
 
 class Ennemy
@@ -31,6 +31,7 @@ private:
     sf::Sprite      m_sprite;
     float           m_health;
     float           m_dmg;
+    float           m_exp;
 
     static std::map<e_monsters, sf::Texture> textures;
 public:
@@ -45,6 +46,7 @@ public:
     float get_health() const;
     sf::Vector2f get_pos() const;
     float get_dmg() const;
+    float get_exp() const;
 };
 
 #endif

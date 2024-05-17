@@ -6,8 +6,8 @@ Projectile:
     [] Piercing mechanic
 
 xp system:
-    [] gain xp when killing mob
-    [] level up system
+    [x] gain xp when killing mob
+    [x] level up system
     [] Acquire spell on level up
     [] xp bar on top of the screen
 

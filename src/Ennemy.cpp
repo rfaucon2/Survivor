@@ -19,6 +19,7 @@ Ennemy::Ennemy(sf::Vector2f pos, float speed, float radius, e_monsters type)
     }
     this->m_health = ENNEMY_STATS.at(type)[0];
     this->m_dmg = ENNEMY_STATS.at(type)[1];
+    this->m_exp = ENNEMY_STATS.at(type)[2];
 
     this->m_radius *= m_health / 7;
 
@@ -60,3 +61,8 @@ float Ennemy::get_dmg() const
 {
     return this->m_dmg;
 }
+float Ennemy::get_exp() const
+{
+    return this->m_exp;
+}
+
