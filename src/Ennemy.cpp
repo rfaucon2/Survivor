@@ -42,7 +42,7 @@ void Ennemy::draw(sf::RenderWindow* window)
     window->draw(this->m_sprite);
 }
 
-bool Ennemy::deal_damange(float dmg)
+bool Ennemy::deal_damage(float dmg)
 {
     this->m_health -= dmg;
     return this->m_health <= 0;
