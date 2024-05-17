@@ -34,7 +34,7 @@ private:
 
     static std::map<e_monsters, sf::Texture> textures;
 public:
-    Ennemy(sf::Vector2f pos, float speed, float radius, e_monsters type = e_monsters::SPIRIT);
+    Ennemy(sf::Vector2f pos, float speed = Ennemy::BASE_SPEED, float radius = Ennemy::BASE_RADIUS, e_monsters type = e_monsters::SPIRIT);
     ~Ennemy();
 
     void update(float dt, sf::Vector2f player_pos);

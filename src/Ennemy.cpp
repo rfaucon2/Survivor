@@ -17,12 +17,14 @@ Ennemy::Ennemy(sf::Vector2f pos, float speed, float radius, e_monsters type)
         placeholder.loadFromFile("resources/ennemies/spirit.png");
         Ennemy::textures[e_monsters::SPIRIT] = sf::Texture(placeholder);
     }
-    this->m_sprite.setTexture(Ennemy::textures[type]);
-    this->m_sprite.setOrigin(this->m_sprite.getGlobalBounds().getSize() * 0.5f);
-    this->m_sprite.setScale(sf::Vector2f(radius / Ennemy::textures[type].getSize().x, radius / Ennemy::textures[type].getSize().y));
-
     this->m_health = ENNEMY_STATS.at(type)[0];
     this->m_dmg = ENNEMY_STATS.at(type)[1];
+
+    this->m_radius *= m_health / 7;
+
+    this->m_sprite.setTexture(Ennemy::textures[type]);
+    this->m_sprite.setOrigin(this->m_sprite.getGlobalBounds().getSize() * 0.5f);
+    this->m_sprite.setScale(sf::Vector2f(this->m_radius / Ennemy::textures[type].getSize().x, this->m_radius / Ennemy::textures[type].getSize().y));
 }
 Ennemy::~Ennemy()
 {
