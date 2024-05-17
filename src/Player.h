@@ -9,7 +9,7 @@ enum class SpellType
     NONE = -1, // returned by Player::has_to_gen_proj when no projectile has to be fired
     CHICKEN = 0,
     STRAIGHT = 1,
-    HOMMING = 2,
+    HOMING = 2,
     BLAST = 3
 };
 
@@ -17,7 +17,7 @@ const std::unordered_map<SpellType, std::vector<float>> spell_data
 { // {Spell, {lvl of acquisition, base dmg, base cd (in second)}}
     {SpellType::CHICKEN, {1.f, 5.f, 0.8f}},
     {SpellType::STRAIGHT, {2.f, 10.f, 1.f}},
-    {SpellType::HOMMING, {4.f, 10.f, 1.2f}},
+    {SpellType::HOMING, {4.f, 10.f, 1.2f}},
     {SpellType::BLAST, {8.f, 10.f, 1.6f}}
 };
 

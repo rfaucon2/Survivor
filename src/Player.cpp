@@ -194,7 +194,7 @@ Projectile::~Projectile()
 
 void Projectile::Update(float dt, Ennemy* target)
 {
-    if(this->m_type == SpellType::HOMMING && target != nullptr)
+    if(this->m_type == SpellType::HOMING && target != nullptr)
     {
         this->m_speed = util::normalize(target->get_pos() - this->m_pos) * Projectile::SPEED;
     }

@@ -1,6 +1,6 @@
 Projectile:
     [x] Keep last pressed direction
-    [] Homming missile range
+    [] Homing missile range
     [] Implement Blast projectile
     [] Implement Chicken
     [] Piercing mechanic

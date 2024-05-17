@@ -100,7 +100,7 @@ void Application::_update_projectile_creation()
     {
         for(int i = 0; i < new_proj.size(); i++)
         {
-            if(new_proj[i] != SpellType::HOMMING || (new_proj[i] == SpellType::HOMMING && this->m_ennemies.size() > 0))
+            if(new_proj[i] != SpellType::HOMING || (new_proj[i] == SpellType::HOMING && this->m_ennemies.size() > 0))
                 this->m_projectiles.push_back(Projectile(this->m_player->get_pos(), this->m_player->get_walking_angle(), new_proj[i], &this->m_projectile_texture_place_holder));
         }
     }
@@ -108,7 +108,7 @@ void Application::_update_projectile_creation()
 void Application::_update_projectiles(float dt)
 {
     for(int i = 0; i < this->m_projectiles.size(); i++){
-        if(this->m_projectiles[i].get_type() == SpellType::HOMMING)
+        if(this->m_projectiles[i].get_type() == SpellType::HOMING)
         {
             // If there are ennemies
             if(this->m_ennemies.size() > 0)
