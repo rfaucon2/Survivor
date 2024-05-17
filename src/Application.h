@@ -23,6 +23,7 @@ private:
     Player*                 m_player;
     sf::Texture             m_projectile_texture_place_holder;
     std::vector<Projectile> m_projectiles;
+    sf::Font                m_font;
 
     std::vector<Ennemy>     m_ennemies;
     int                     m_waves_nb;

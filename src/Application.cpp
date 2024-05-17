@@ -16,6 +16,7 @@ Application::Application()
     this->m_player = new Player();
     this->m_projectile_texture_place_holder.loadFromFile("resources/placeholder_bullet.png");
     this->m_projectiles.push_back(Projectile(this->m_player->get_pos(), M_PI_2, SpellType::CHICKEN, &this->m_projectile_texture_place_holder));
+    this->m_font.loadFromFile("resources/font/Lost Signal.otf");
 }
 Application::~Application()
 {
@@ -210,6 +211,7 @@ void Application::_draw_background()
 }
 void Application::_draw_exp_bar()
 {
+    // Display bar
     float player_exp = this->m_player->get_exp();
     float player_thresh = this->m_player->get_exp_thresh();
     const float height = 20;
@@ -222,7 +224,19 @@ void Application::_draw_exp_bar()
     this->m_window->draw(rs); // Draw background
     rs.setSize(sf::Vector2f(width* (player_exp / player_thresh), height));
     rs.setFillColor(sf::Color(0x1ff010ff));
-    this->m_window->draw(rs); // Draw background
+    this->m_window->draw(rs); // Draw acquiered exp
+
+    // Display level text
+    const float horizontal_padding = 20;
+    const float vertical_padding =  10;
+
+    std::string s = "Level " + std::to_string(this->m_player->get_level());
+    sf::Text text(s, this->m_font);
+    text.setPosition(this->m_viewport.getCenter() + sf::Vector2f(Application::WIDTH, Application::HEIGHT) * (-0.5f) + sf::Vector2f(horizontal_padding, vertical_padding + height));
+    text.setFillColor(sf::Color(0xffffffff));
+
+    
+    this->m_window->draw(text);
 }
 
 void Application::spawn_ennemy(sf::Vector2f pos, e_monsters type)

@@ -143,7 +143,6 @@ float Player::get_walking_angle() const
 {
     return this->m_walking_angle;
 }
-
 float Player::get_exp() const
 {
     return this->m_exp;
@@ -151,6 +150,10 @@ float Player::get_exp() const
 float Player::get_exp_thresh() const
 {
     return int((float)Player::LVL_UP_THRESH * pow(Player::THRESH_MULTIPLIER, this->m_level - 1));
+}
+int Player::get_level() const
+{
+    return this->m_level;
 }
 
 bool Player::receive_damage(int damage, sf::Time current_time)
