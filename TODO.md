@@ -13,5 +13,5 @@ xp system:
 
 Ennemy:
     [] rebalance stats
-    [] Scale ennemy size on Max HP
+    [x] Scale ennemy size on Max HP
     [] rework spawing 
