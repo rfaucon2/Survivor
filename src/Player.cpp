@@ -12,10 +12,10 @@ Player::Player()
     this->m_level = 1;
     this->m_exp = 0;
     // Spell variables
-    this->m_available_spells = {SpellType::CHICKEN, SpellType::HOMMING};
-    this->m_acquisition_time = {0.f, 0.1f};
-    this->m_spell_dmg_mult = {1.0, 1.0};
-    this->m_spell_cdr_mult = {1.0, 1.0};
+    this->m_available_spells = {SpellType::STRAIGHT};
+    this->m_acquisition_time = {0.f};
+    this->m_spell_dmg_mult = {1.0};
+    this->m_spell_cdr_mult = {1.0};
 
     this->m_hit_cd = 1.f;
 }
@@ -36,7 +36,9 @@ void Player::Update(float dt)
     dp = util::normalize(dp) * dt * this->m_speed;
     this->m_rect.top += dp.y;
     this->m_rect.left += dp.x;
-    this->m_walking_angle = -atan2(dp.y, dp.x);
+
+    if(dp != sf::Vector2f(0, 0))
+        this->m_walking_angle = -atan2(dp.y, dp.x);
 }
 void Player::Draw(sf::RenderTarget* target)
 {
@@ -141,6 +143,15 @@ int Player::get_maxhp() const
 float Player::get_walking_angle() const
 {
     return this->m_walking_angle;
+}
+
+float Player::get_exp() const
+{
+    return this->m_exp;
+}
+float Player::get_exp_thresh() const
+{
+    return int((float)Player::LVL_UP_THRESH * pow(Player::THRESH_MULTIPLIER, this->m_level - 1));
 }
 
 bool Player::receive_damage(int damage, sf::Time current_time)
