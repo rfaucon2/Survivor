@@ -67,6 +67,8 @@ public:
     int get_hp() const;
     int get_maxhp() const;
     float get_walking_angle() const;
+    float get_exp() const;
+    float get_exp_thresh() const;
 
     bool receive_damage(int damage, sf::Time current_time);
 };
