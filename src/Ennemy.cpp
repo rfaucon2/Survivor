@@ -16,12 +16,16 @@ Ennemy::Ennemy(sf::Vector2f pos, float speed, float radius, e_monsters type)
         Ennemy::textures[e_monsters::GOBLIN] = sf::Texture(placeholder);
         placeholder.loadFromFile("resources/ennemies/spirit.png");
         Ennemy::textures[e_monsters::SPIRIT] = sf::Texture(placeholder);
+        placeholder.loadFromFile("resources/ennemies/skeleton.png");
+        Ennemy::textures[e_monsters::SKELETON] = sf::Texture(placeholder);
+        placeholder.loadFromFile("resources/ennemies/dragon.png");
+        Ennemy::textures[e_monsters::DRAGON] = sf::Texture(placeholder);
     }
     this->m_health = ENNEMY_STATS.at(type)[0];
     this->m_dmg = ENNEMY_STATS.at(type)[1];
     this->m_exp = ENNEMY_STATS.at(type)[2];
 
-    this->m_radius *= m_health / 7;
+    this->m_radius *= sqrt(m_health / 7);
 
     this->m_sprite.setTexture(Ennemy::textures[type]);
     this->m_sprite.setOrigin(this->m_sprite.getGlobalBounds().getSize() * 0.5f);

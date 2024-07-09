@@ -8,13 +8,17 @@ typedef enum
 {
     GOBLIN = 0,
     SPIRIT,
+    SKELETON,
+    DRAGON,
     SIZE
 } e_monsters;
 
 const std::map<e_monsters, std::vector<float>> ENNEMY_STATS = {
 //  {type, {health, damage, exp}}
     {e_monsters::GOBLIN, {6.0f,  9.0f, 10.f}},
-    {e_monsters::SPIRIT, {10.0f, 7.0f, 21.f}}
+    {e_monsters::SPIRIT, {11.0f, 7.0f, 21.f}},
+    {e_monsters::SKELETON, {21.0f, 13.0f, 30.f}},
+    {e_monsters::DRAGON, {60.0f, 50.0f, 100.f}}
 };
 
 class Ennemy

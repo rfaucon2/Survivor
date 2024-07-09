@@ -15,4 +15,5 @@ xp system:
 Ennemy:
     [] rebalance stats
     [x] Scale ennemy size on Max HP
-    [] rework spawing 
+    [] rework spawing
+    [x] add ennemies because of my little cousins
